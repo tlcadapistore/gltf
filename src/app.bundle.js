@@ -19897,6 +19897,10 @@
                             label: "View normals",
                             checked: () => this.props.app.state.viewNormals
                         }, {
+                            id: "toggle_sampleProjects",
+                            label: "Sample models",
+                            checked: () => this.props.app.state.showWelcome
+                        }, {
                             id: "toggle_animation",
                             label: "Animation",
                             checked: () => this.props.app.state.showAnimation
@@ -22034,7 +22038,15 @@ def "Geometry"
         class La extends z {
             execute(t) {
                 this._app.setState(e => ({
-                    showWelcome: null != t ? t
+                    showWelcome: null != t ? t : !e.showWelcome
+                }))
+            }
+        }
+        La.ID = "toggle_sampleProjects";
+        class Da extends z {
+            execute(e) {
+                this._app.setState(e => ({
+                    showAnimation: !e.showAnimation
                 }))
             }
         }
@@ -23480,7 +23492,28 @@ def "Geometry"
                 return ""
             }
         }
-
+        class vn extends u.Component {
+            constructor() {
+                super(...arguments), this.onMount = e => {
+                    y.listenPopup(e, this.onCloseClick)
+                }, this.onCloseClick = () => {
+                    this.props.onClose()
+                }
+            }
+            render() {
+                return u.createElement("div", {
+                    className: "WelcomeView vbox vcenter",
+                    ref: this.onMount
+                }, u.createElement("div", {
+                    className: "title"
+                }, "Sample models"), u.createElement("div", {
+                    className: "popup-close",
+                    onClick: this.onCloseClick
+                }), u.createElement(fn, {
+                    onModelSelected: this.props.onModelSelected
+                }))
+            }
+        }
         var at, nt = c(1022);
         class bn {
             constructor() {
@@ -24779,7 +24812,6 @@ def "Geometry"
                 }, this.onSampleModelSelected = e => {
                     this._project.load(e)
                 }, this.onCloseWelcomeView = () => {
-					alert("hello world");
                     this.setState({
                         showWelcome: !1
                     })
@@ -24816,7 +24848,7 @@ def "Geometry"
             onLoadStarted() {
                 this._engine.clear(), this.setState({
                     loading: !0,
-                    showWelcome: !0
+                    showWelcome: !1
                 })
             }
             onLoadCompleted(e) {
