@@ -23502,16 +23502,11 @@ def "Geometry"
             }
             render() {
                 return u.createElement("div", {
-                    className: "WelcomeView vbox vcenter",
+                    className: "WelcomeView vbox vcenter mytest",
                     ref: this.onMount
                 }, u.createElement("div", {
                     className: "title"
-                }, "Sample models"), u.createElement("div", {
-                    className: "popup-close",
-                    onClick: this.onCloseClick
-                }), u.createElement(fn, {
-                    onModelSelected: this.props.onModelSelected
-                }))
+                },))
             }
         }
         var at, nt = c(1022);
@@ -24969,10 +24964,7 @@ def "Geometry"
                     className: "dropIndicator"
                 }, u.createElement("div", null, "Drop anywhere to open files"), u.createElement("div", {
                     className: "second"
-                }, "(Press shift to import into existing)")) : this.state.showWelcome && u.createElement(vn, {
-                    onModelSelected: this.onSampleModelSelected,
-                    onClose: this.onCloseWelcomeView
-                }), !this.state.dropping && this.state.showAnimation && this.state.animation && u.createElement(jn, {
+                }, "(Press shift to import into existing)")) : this.state.showWelcome , !this.state.dropping && this.state.showAnimation && this.state.animation && u.createElement(jn, {
                     animation: this.state.animation,
                     onClose: () => this.setState({
                         showAnimation: !1
