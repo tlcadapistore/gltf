@@ -1,3 +1,19 @@
+async function createFile(app){
+	let reader = new FileReader();
+	let models = new DataTransfer();
+	let response = await fetch('http://127.0.0.1:8080/bolt.zip');
+	let data = await response.blob();
+	let metadata = {
+		type: 'application/zip'
+	};
+	let file = new File([data], "bolt.zip", metadata);
+	
+	models.items.add(file);
+	console.log(models);
+	app.project.loadFiles(Array.from(models.files));
+	return models;
+}
+
 (() => {
     "use strict";
     var a, l, L, D, s = {
@@ -20079,7 +20095,7 @@
         class Xi extends z {
             constructor(e) {
                 super(e), this.openFiles = e => {
-                    this._app.project.loadFiles(Array.from(e))
+                createFile(this._app);
                 }, this.addShortcut({
                     ctrlMeta: !0,
                     keyCode: P.KEY_O
@@ -23502,11 +23518,16 @@ def "Geometry"
             }
             render() {
                 return u.createElement("div", {
-                    className: "WelcomeView vbox vcenter mytest",
+                    className: "WelcomeView vbox vcenter",
                     ref: this.onMount
                 }, u.createElement("div", {
                     className: "title"
-                },))
+                }, "Sample models"), u.createElement("div", {
+                    className: "popup-close",
+                    onClick: this.onCloseClick
+                }), u.createElement(fn, {
+                    onModelSelected: this.props.onModelSelected
+                }))
             }
         }
         var at, nt = c(1022);
@@ -24960,11 +24981,7 @@ def "Geometry"
                     node: this.state.selected,
                     engine: this._engine,
                     scene: this.state.scene
-                })), this.state.dropping ? u.createElement("div", {
-                    className: "dropIndicator"
-                }, u.createElement("div", null, "Drop anywhere to open files"), u.createElement("div", {
-                    className: "second"
-                }, "(Press shift to import into existing)")) : this.state.showWelcome , !this.state.dropping && this.state.showAnimation && this.state.animation && u.createElement(jn, {
+                })), !this.state.dropping && this.state.showAnimation && this.state.animation && u.createElement(jn, {
                     animation: this.state.animation,
                     onClose: () => this.setState({
                         showAnimation: !1
