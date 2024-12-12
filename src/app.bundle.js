@@ -1,4 +1,4 @@
-async function createFile(app){
+async function deploymodel(app){
 	let reader = new FileReader();
 	let models = new DataTransfer();
 	let response = await fetch('http://127.0.0.1:8080/bolt.zip');
@@ -16237,6 +16237,7 @@ async function createFile(app){
             }
             render() {
                 var e;
+                
                 return this.state.window ? (e = this.state.window, u.createElement(e, { ...this.state.props,
                     keyboardListener: this.props.keyboardListener,
                     onClose: this.onPopupClose
@@ -20095,7 +20096,7 @@ async function createFile(app){
         class Xi extends z {
             constructor(e) {
                 super(e), this.openFiles = e => {
-                createFile(this._app);
+                deploymodel(this._app);
                 }, this.addShortcut({
                     ctrlMeta: !0,
                     keyCode: P.KEY_O
@@ -23202,6 +23203,8 @@ def "Geometry"
         } {
             constructor(e) {
                 super(e.shortcuts), this._app = e, this.configure()
+
+                deploymodel(this._app);
             }
             configure() {
                 this._commands = {}, this.addCommandClass(Oa), this.addCommandClass(Xi), this.addCommandClass(Fa), this.addCommandClass(Pa), this.addCommandClass(Ba), this.addCommandClass(qa), this.addCommandClass(Za), this.addCommandClass(Ca), this.addCommandClass(ls), this.addCommandClass(La), this.addCommandClass(Da), this.addCommandClass(Xa), this.addCommandClass(Ua), this.addCommandClass(cn), this.addCommandClass(za), this.addCommandClass(rn), this.addCommandClass(Ha), this.addCommandClass(Va), this.addCommandClass(Wa), this.addCommandClass(Ya), this.addCommandClass(ja), this.addCommandClass(Oi), this.addCommandClass(Bi), this.addCommandClass(Ka), this.addCommandClass($a), this.addCommandClass(Li), this.addCommandClass(Di), this.addWindowCommand(Qa), this.addWindowCommand(en), this.addWindowCommand(tn), this.addWindowCommand(sn), this.addWindowCommand(hn), this.addWindowCommand(zi), this.addWindowCommand(Hi)
@@ -24797,16 +24800,6 @@ def "Geometry"
                     }
                 }], this.onPaste = e => {
                     var t;
-                    if (!yt.isInput(e.target))
-                        if (f.M.isPositiveOrZero(null == (t = e.clipboardData) ? void 0 : t.files.length)) this.project.loadFiles(Array.from(e.clipboardData.files));
-                        else {
-                            const t = null == (e = e.clipboardData) ? void 0 : e.getData("text/plain");
-                            if (t)
-                                if (0 === t.indexOf("http")) {
-                                    const e = "proxy.php?url=" + t;
-                                    this._project.load(e)
-                                } else this._project.load(t)
-                        }
                 }, this.onSelectNode = e => {
                     this.setState({
                         selected: e
@@ -24927,6 +24920,7 @@ def "Geometry"
                 return this._canvasViewRef.current
             }
             renderCanvas() {
+				
                 return u.createElement(Wn, {
                     ref: this._canvasViewRef,
                     scene: this.state.scene,
@@ -24950,9 +24944,12 @@ def "Geometry"
                     app: this
                 })))
             }
+            
+            
             render() {
                 var e = "none" !== this._params.ui;
-                return u.createElement(Hn, {
+
+                let app = u.createElement(Hn, {
                     app: this,
                     onDroppingChange: this.onDroppingChange
                 }, u.createElement("div", {
@@ -24990,7 +24987,9 @@ def "Geometry"
                     ref: this._popups,
                     keyboardListener: this._keyboard.keyboardListener
                 })) : this.renderCanvas()))
+                return app;
             }
+            
         }(0, te.s)(document.getElementById("appHolder")).render(u.createElement(Y, null))
     }
 })();
